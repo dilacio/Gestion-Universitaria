@@ -146,8 +146,6 @@ public class servletAltaCursos extends HttpServlet {
 					if (!curNegocio.agregar(curso)) {
 						inserto = "NO";
 						request.setAttribute("Inserto", inserto);
-						RequestDispatcher view = request.getRequestDispatcher("/administradorAltaCursos.jsp");
-						view.forward(request, response);
 					} else {
 						inserto = "SI";
 						request.setAttribute("Inserto", inserto);
@@ -159,8 +157,6 @@ public class servletAltaCursos extends HttpServlet {
 							curNegocio.inscribirAlumno(id_curso, legajoInsertar);
 						}
 
-						RequestDispatcher view = request.getRequestDispatcher("/administradorAltaCursos.jsp");
-						view.forward(request, response);
 					}
 				} else {
 					String seleccionoAlumnos = "NO";
@@ -170,8 +166,6 @@ public class servletAltaCursos extends HttpServlet {
 				}
 			} else {
 				request.setAttribute("Inserto", inserto);
-				RequestDispatcher view = request.getRequestDispatcher("/administradorAltaCursos.jsp");
-				view.forward(request, response);
 			}
 
 		}
@@ -184,10 +178,9 @@ public class servletAltaCursos extends HttpServlet {
 
 			boolean borroAlumnos = CursoNegocio.borrarAlumnosCursos(cursoBorrar);
 			boolean borrarCurso = CursoNegocio.borrarCurso(cursoBorrar);
-
-			RequestDispatcher view = request.getRequestDispatcher("/administradorAltaCursos.jsp");
-			view.forward(request, response);
 			
 		}
+		RequestDispatcher view = request.getRequestDispatcher("/administradorAltaCursos.jsp");
+		view.forward(request, response);
 	}
 }

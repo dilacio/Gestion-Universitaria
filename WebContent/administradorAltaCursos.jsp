@@ -95,12 +95,54 @@
 <script src="js/gsdk-switch.js"></script>
 <script src="js/jquery.sharrre.js"></script>
 <script src="js/demo.js"></script>
-<script>function soloNumeros(e){
+
+<style type="text/css">
+
+.ocultarLabel { display: none;}
+
+</style>
+<script >function soloNumeros(e){
 	  var key = window.event ? e.which : e.keyCode;
 	  if (key < 48 || key > 57) {
 	    e.preventDefault();
 	  }
-	}</script>
+	};
+	
+	const form = document.getElementById("formPrincipal");
+	const boton = document.getElementById('btnAgregarCurso');
+	
+	
+	form.addEventListener('submit', (e) => {
+		e.preventDefault();
+	}) ;
+	
+	boton.addEventListener('click',(e) => {
+		
+		e.preventDefault();
+		const materia 			= document.getElementById('selectMateria').value;
+		const docente 			= document.getElementById('selectDocente').value;
+		const cuatrimestre 		= document.getElementById('selectCuatrimestre').value;
+		const anio 				= document.getElementById('selectAnio').value;
+		const form 				= document.getElementById("formPrincipal");
+		const lblFantanCampos 	= document.getElementById('lblFantanCampos');
+		const tabla 		= document.getElementById('fresh-table');
+		
+		if(materia != 0 && docente != 0 && cuatrimestre != 0 && anio != 0 &&  document.querySelectorAll('input[name="fila"]:checked').length > 0 )
+		{
+			lblFantanCampos.classList.add('ocultarLabel');
+			console.log('entro');
+			form.submit();
+		}
+		else
+		{
+			<% request.setAttribute("boton", false); %>
+			lblFantanCampos.style.display = "inline";
+		}
+	
+	});
+
+	</script>
+	
 </head>
 <body>
 
@@ -114,7 +156,7 @@
 		view.forward(request, response);
 	}
 	%>
-	<form method="post" action="servletAltaCursos">
+	<form method="post" action="servletAltaCursos" id="formPrincipal">
 		<div class="container">
 
 			<div class="navbar-header">
@@ -185,7 +227,7 @@
 									class="form-control btn btn-default dropdown-toggle browser-default custom-select"
 									name="selectMateria"
 									style="background-color: gray; width: 50%; margin-top: 10px; margin-bottom: 10px;"
-									id="selectMateria">
+									id="selectMateria" >
 									<option value="0" selected>Selecciona una materia</option>
 									<%
 										ArrayList<Materia> listaMaterias = (ArrayList) request.getAttribute("listaMaterias");
@@ -246,7 +288,7 @@
 						<div class="fresh-table full-color-blue">
 							<div class="col-md-4"></div>
 
-							<table id="fresh-table" class="table">
+							<table id="fresh-table" class="table" >
 								<thead>
 									<th data-field="#" data-sortable="true">#</th>
 									<th data-field="Legajo" data-sortable="true">Legajo</th>
@@ -272,7 +314,7 @@
 										<td><%=alumno.getMail()%></td>
 										<td><%=alumno.getTelefono()%></td>
 										<td><input type="checkbox"
-											value='<%=alumno.getLegajo()%>' name="fila"></td>
+											value='<%=alumno.getLegajo()%>' name="fila" id="fila"></td>
 									</tr>
 									<%
 										}
@@ -282,7 +324,8 @@
 
 								</tbody>
 							</table>
-							<%
+							
+						<%
 								if (request.getAttribute("Inserto") != null) {
 								if (request.getAttribute("Inserto") == "SI") {
 							%>
@@ -298,20 +341,23 @@
 
 							<%
 								}
-							} else {
+							} 
 							%>
-							<br> <label
-								style="color: white; font-size: 20px; font-family: 'Cairo', sans-serif; margin-left: 100px;">
-								Debe seleccionar todos los campos</label>
-							<%
-								}
-							%>
-							<hr>
 
-							<input type="submit" value="Agregar"
-								class="btn btn-info btn-fille active" name="btnAgregarCurso"
+							<br> <label id="lblFantanCampos"
+								style="color: white; font-size: 20px; font-family: 'Cairo', sans-serif; margin-left: 100px; margin-bottom: 20px;" >
+								Debe seleccionar todos los campos</label> <br>
+							
+							
+							
+							<button class="btn btn-info btn-fille active" name="btnAgregarCurso" 
 								style="width: 60%; background-color: #ffb33b; align-items: center; position: relative; left: 20%; margin-bottom: 20px;"
-								id="btnAgregarCurso"><br>
+								id="btnAgregarCurso">Agregar</button><br>
+
+							<!-- <input type="submit" value="Agregar"
+								class="btn btn-info btn-fille active" name="btnAgregarCurso" 
+								style="width: 60%; background-color: #ffb33b; align-items: center; position: relative; left: 20%; margin-bottom: 20px;"
+								id="btnAgregarCurso"><br> -->
 
 						</div>
 					</div>
@@ -320,6 +366,7 @@
 		</div>
 	</form>
 </body>
+
 
 <script type="text/javascript">
 	var $table = $('#fresh-table')
@@ -394,7 +441,7 @@
 		i[r] = i[r] || function() {
 			(i[r].q = i[r].q || []).push(arguments)
 		}, i[r].l = 1 * new Date();
-		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+		a = s.createElement(o), m = s.getElement--sByTagName(o)[0];
 		a.async = 1;
 		a.src = g;
 		m.parentNode.insertBefore(a, m)
